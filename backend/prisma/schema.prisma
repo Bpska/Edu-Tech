@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String        @id @default(uuid())
+  email               String        @unique
+  password_hash       String?
+  role                String        @default("STUDENT")
+  name                String?
+  onboardingCompleted Boolean       @default(false)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+  purchases           Purchase[]
+  examHistories       ExamHistory[]
+  profile             Profile?
+}
+
+model Profile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  dateOfBirth       String?
+  classYear         String?
+  targetExam        String?
+  examAttemptYear   String?
+  preferredLanguage String?
+  currentSkillLevel String?
+  dailyStudyHours   String?
+  weakSubjects      String?
+  strongSubjects    String?
+  targetScoreRank   String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  isPublished Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  purchases   Purchase[]
+  tests       Test[]
+  resources   Resource[]
+}
+
+model Purchase {
+  id              String   @id @default(uuid())
+  userId          String
+  courseId        String
+  razorpayOrderId String?  @unique
+  status          String   @default("PENDING") // PENDING, SUCCESS, FAILED
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id])
+  course          Course   @relation(fields: [courseId], references: [id])
+}
+
+model Test {
+  id             String        @id @default(uuid())
+  courseId       String
+  title          String
+  duration       Int           // Duration in minutes
+  totalQuestions Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  course         Course        @relation(fields: [courseId], references: [id])
+  questions      Question[]
+  examHistories  ExamHistory[]
+}
+
+model Question {
+  id                 String   @id @default(uuid())
+  testId             String
+  text               String
+  options            String   // Stored as JSON string
+  correctAnswerIndex Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  test               Test     @relation(fields: [testId], references: [id])
+}
+
+model ExamHistory {
+  id          String   @id @default(uuid())
+  userId      String
+  testId      String
+  score       Int      @default(0)
+  completedAt DateTime @default(now())
+  responses   String   // Stored as JSON string
+  user        User     @relation(fields: [userId], references: [id])
+  test        Test     @relation(fields: [testId], references: [id])
+}
+
+model Resource {
+  id        String   @id @default(uuid())
+  courseId  String
+  title     String
+  type      String   // "VIDEO", "DOCUMENT", "TEXT"
+  url       String?  // For video/document links
+  content   String?  // For text content
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  course    Course   @relation(fields: [courseId], references: [id])
+}
