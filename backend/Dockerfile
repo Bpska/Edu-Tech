@@ -42,15 +42,15 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 WORKDIR /app
 
 # Copy production node_modules from deps stage
-COPY --from=deps /app/node_modules ./node_modules
+COPY --chown=appuser:appgroup --from=deps /app/node_modules ./node_modules
 
 # Copy generated Prisma client
-COPY --from=prisma-builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --chown=appuser:appgroup --from=prisma-builder /app/node_modules/.prisma ./node_modules/.prisma
 
 # Copy application source
-COPY src ./src
-COPY prisma ./prisma
-COPY package.json ./
+COPY --chown=appuser:appgroup src ./src
+COPY --chown=appuser:appgroup prisma ./prisma
+COPY --chown=appuser:appgroup package.json ./
 
 # Switch to non-root user
 USER appuser
