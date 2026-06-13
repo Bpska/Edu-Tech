@@ -1,60 +1,60 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #FFFBF1;
-  --color-lightyellow: #FFF2D0;
-  --color-coral: #E36A6A;
-  --color-lightpink: #FFB2B2;
-  --color-navy: #0A192F; /* keep for some legacy reference if needed */
+  --color-cream: #F8FAFC;
+  --color-lightyellow: #F1F5F9;
+  --color-coral: #2563EB;
+  --color-lightpink: #DBEAFE;
+  --color-navy: #0F172A;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-display: 'Outfit', sans-serif;
 }
 
 body {
-  background-color: var(--color-cream, #FFFBF1);
-  color: #333333;
+  background-color: var(--color-cream, #F8FAFC);
+  color: #334155;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
-  color: var(--color-navy, #0A192F);
+  color: var(--color-navy, #0F172A);
 }
 
-/* Glassmorphism */
+/* Glassmorphism - simplified for professional look */
 .glass {
-  background: rgba(255, 242, 208, 0.4); /* Light yellow with transparency */
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(227, 106, 106, 0.15); /* Coral border */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(227, 106, 106, 0.2);
-  box-shadow: 0 8px 32px rgba(227, 106, 106, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
   border-radius: 1rem;
   padding: 1.5rem;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - clean and professional */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 242, 208, 0.5); 
+  background: #F1F5F9; 
 }
  
 ::-webkit-scrollbar-thumb {
-  background: rgba(227, 106, 106, 0.5); 
+  background: #CBD5E1; 
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(227, 106, 106, 0.8); 
+  background: #94A3B8; 
 }
