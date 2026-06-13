@@ -33,8 +33,8 @@ RUN npx prisma generate
 # ─────────────────────────────────────────────
 FROM node:20-alpine AS production
 
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
+# Install dumb-init for proper signal handling and openssl for Prisma engines
+RUN apk add --no-cache dumb-init openssl
 
 # Create non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
