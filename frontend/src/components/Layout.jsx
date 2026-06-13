@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: 'var(--color-cream)', color: '#333333', fontFamily: "'DM Sans', sans-serif" }}
+      style={{ backgroundColor: 'var(--color-cream)', color: '#333333', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       {/* Toast provider */}
       <Toaster
@@ -44,7 +44,7 @@ const Layout = ({ children }) => {
       <header className="sticky top-0 z-40 glass border-b px-6 py-4 flex items-center justify-between" style={{ borderColor: 'rgba(227,106,106,0.1)' }}>
         <div className="flex items-center gap-3">
           <GraduationCap className="w-8 h-8" style={{ color: 'var(--color-coral)' }} />
-          <Link to="/" style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700, fontSize: '1.4rem', color: 'var(--color-navy)', textDecoration: 'none', letterSpacing: '0.1em' }}>
+          <Link to="/" style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: '1.4rem', color: 'var(--color-navy)', textDecoration: 'none', letterSpacing: '0.1em' }}>
             NEXUS<span style={{ color: 'var(--color-coral)', fontWeight: 300 }}>ACADEMY</span>
           </Link>
         </div>

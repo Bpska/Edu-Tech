@@ -9,7 +9,7 @@
   min-height: 100vh;
   background: #FFFBF1;
   color: #555555;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* ── Sidebar ── */
@@ -58,7 +58,7 @@
 }
 
 .adm-sidebar-brand {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
   color: #333333;
@@ -172,7 +172,7 @@
 }
 
 .adm-header-title {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
   color: #333333;
@@ -264,7 +264,7 @@
 }
 
 .adm-stat-value {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 2rem;
   font-weight: 700;
   color: #333333;
@@ -289,7 +289,7 @@
 }
 
 .adm-card-title {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   color: #333333;
@@ -430,7 +430,7 @@
   color: #FFFBF1;
   border: none;
   border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   font-size: 0.875rem;
   cursor: pointer;
@@ -483,7 +483,7 @@
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background 0.15s;
 }
 .adm-btn-add:hover { background: rgba(227,106,106,0.14); }
@@ -536,7 +536,7 @@
   color: #555555;
   font-size: 0.875rem;
   outline: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   box-sizing: border-box;
   transition: border-color 0.15s;
 }
@@ -576,7 +576,7 @@
 }
 
 .adm-summary-value {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.75rem;
   font-weight: 700;
   margin: 6px 0 0;
@@ -831,7 +831,7 @@
 }
 
 .adm-modal-title {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: #333333;
@@ -890,7 +890,7 @@
   border-radius: 10px;
   color: #333333;
   font-size: 0.875rem;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   outline: none;
   transition: border-color 0.15s;
   box-sizing: border-box;
@@ -922,7 +922,7 @@
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -952,7 +952,7 @@
   color: #FFFFFF;
   border: none;
   border-radius: 12px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
@@ -984,7 +984,7 @@
   justify-content: center;
   transition: all 0.15s;
   background: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .adm-option-letter.correct {

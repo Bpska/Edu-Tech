@@ -6,18 +6,18 @@
   --color-coral: #E36A6A;
   --color-lightpink: #FFB2B2;
   --color-navy: #0A192F; /* keep for some legacy reference if needed */
-  --font-sans: 'DM Sans', sans-serif;
-  --font-display: 'Clash Display', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Outfit', sans-serif;
 }
 
 body {
   background-color: var(--color-cream, #FFFBF1);
   color: #333333;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'Outfit', sans-serif;
   color: var(--color-navy, #0A192F);
 }
 

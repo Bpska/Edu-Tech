@@ -88,7 +88,7 @@ const AdminHistory = () => {
                     </td>
                     <td>{h.test?.title}</td>
                     <td>
-                      <span style={{ fontFamily: "'Clash Display', sans-serif", fontWeight: 700, fontSize: '1rem', color }}>
+                      <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: '1rem', color }}>
                         {h.score} / {total}
                       </span>
                     </td>
