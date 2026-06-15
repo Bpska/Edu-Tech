@@ -4,8 +4,10 @@ import api from '../utils/api';
 import { DashboardSkeleton } from '../components/Skeleton';
 import { Award, BookOpen, ChevronRight, TrendingUp, Calendar, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -88,7 +90,7 @@ const Dashboard = () => {
               <span className="text-sm font-semibold tracking-widest uppercase">Student Workspace</span>
             </div>
             <h1 className="text-4xl font-display font-bold text-gray-900">
-              Welcome back, Student!
+              Welcome back, {user?.name || user?.email?.split('@')[0] || 'Student'}!
             </h1>
             <p className="text-gray-600 max-w-2xl">
               Track your daily learning progress, attempt mock tests, and review performance insights from your instructors.

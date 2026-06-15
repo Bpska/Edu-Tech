@@ -15,17 +15,30 @@ const MockTestSelection = () => {
   useEffect(() => {
     const fetchTestsAndPurchases = async () => {
       try {
-        const [coursesRes, purchasesRes] = await Promise.all([
+        const [coursesRes, purchasesRes, historyRes] = await Promise.all([
           api.get('/courses'),
-          api.get('/user/courses').catch(() => ({ data: [] })) // fallback if empty
+          api.get('/user/courses').catch(() => ({ data: [] })), // fallback if empty
+          api.get('/user/exam-history').catch(() => ({ data: [] })) // for progress status
         ]);
         
         // Organize tests by course
         const courses = coursesRes.data;
         const purchasedIds = purchasesRes.data.map(c => c.id);
         
+        // Build a set of completed test IDs from exam history
+        const completedTestIds = new Set(historyRes.data.map(h => h.testId));
+        
+        // Annotate each test with a progress field derived from exam history
+        const annotatedCourses = courses.map(course => ({
+          ...course,
+          tests: (course.tests || []).map(test => ({
+            ...test,
+            progress: completedTestIds.has(test.id) ? 'Completed' : 'Not Started'
+          }))
+        }));
+        
         setPurchasedCourseIds(purchasedIds);
-        setSeriesList(courses);
+        setSeriesList(annotatedCourses);
       } catch (err) {
         // Mock fallback if endpoints are empty or fail
         setSeriesList([
@@ -35,7 +48,7 @@ const MockTestSelection = () => {
             price: 0,
             tests: [
               { id: 't1', title: 'React Hooks Deep Dive', duration: 30, totalQuestions: 15, progress: 'Completed' },
-              { id: 't2', title: 'Tailwind CSS Grid & Flex', duration: 20, totalQuestions: 10, progress: 'In Progress' }
+              { id: 't2', title: 'Tailwind CSS Grid & Flex', duration: 20, totalQuestions: 10, progress: 'Not Started' }
             ]
           },
           {

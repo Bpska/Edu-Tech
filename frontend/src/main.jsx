@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator) {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId="240748277924-20e7omtf99j2qmh2tpe889rdf62gdtd3.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "240748277924-20e7omtf99j2qmh2tpe889rdf62gdtd3.apps.googleusercontent.com"}>
       <AuthProvider>
         <App />
       </AuthProvider>

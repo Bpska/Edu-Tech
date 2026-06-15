@@ -83,11 +83,11 @@ const Login = () => {
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 glass-card overflow-hidden !p-0">
 
         {/* Animated Left Panel */}
-        <div className="hidden md:flex flex-col justify-between p-12 bg-gradient-to-br from-[#FFFBF1] via-[#FFF2D0] to-[#FFB2B2]/20 relative overflow-hidden border-r border-[#E36A6A]/20">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(100,255,218,0.08),transparent_50%)]" />
+        <div className="hidden md:flex flex-col justify-between p-12 bg-gradient-to-br from-[#EFF6FF] via-[#DBEAFE] to-[#BFDBFE]/40 relative overflow-hidden border-r border-[#BFDBFE]/40">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.06),transparent_50%)]" />
 
           <div className="flex items-center gap-3 relative z-10">
-            <GraduationCap className="w-10 h-10 text-[#E36A6A]" />
+            <GraduationCap className="w-10 h-10 text-[#1D4ED8]" />
             <span className="font-display font-bold text-2xl text-gray-900 tracking-widest">NEXUS</span>
           </div>
 
@@ -99,7 +99,7 @@ const Login = () => {
               className="text-4xl font-display font-bold leading-tight"
             >
               Elevate Your Learning <br />
-              <span className="text-[#E36A6A]">Master Your Exams.</span>
+              <span className="text-[#1D4ED8]">Master Your Exams.</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -114,9 +114,9 @@ const Login = () => {
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 3 }}
-                className="w-3 h-3 rounded-full bg-[#E36A6A]"
+                className="w-3 h-3 rounded-full bg-[#1D4ED8]"
               />
-              <span className="text-sm text-[#E36A6A] font-semibold tracking-wider uppercase">Interactive Exam Environment</span>
+              <span className="text-sm text-[#1D4ED8] font-semibold tracking-wider uppercase">Interactive Exam Environment</span>
             </div>
           </div>
 
@@ -148,7 +148,7 @@ const Login = () => {
                     <input
                       type="text"
                       placeholder="John Doe"
-                      className="w-full bg-[#FFF2D0] border border-[#E36A6A]/20 rounded-xl py-3 pl-10 pr-4 text-gray-900 placeholder-gray-500 outline-none transition-all"
+                      className="w-full bg-[#EFF6FF] border border-[#BFDBFE] rounded-xl py-3 pl-10 pr-4 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#93C5FD]"
                       {...formRegister('name')}
                     />
                   </div>
@@ -163,7 +163,7 @@ const Login = () => {
                   <input
                     type="email"
                     placeholder="student@nexus.com"
-                    className="w-full bg-[#FFF2D0] border border-[#E36A6A]/20 rounded-xl py-3 pl-10 pr-4 text-gray-900 placeholder-gray-500 outline-none transition-all"
+                    className="w-full bg-[#EFF6FF] border border-[#BFDBFE] rounded-xl py-3 pl-10 pr-4 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#93C5FD]"
                     {...formRegister('email')}
                   />
                 </div>
@@ -177,7 +177,7 @@ const Login = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
-                    className="w-full bg-[#FFF2D0] border border-[#E36A6A]/20 rounded-xl py-3 pl-10 pr-10 text-gray-900 placeholder-gray-500 outline-none transition-all"
+                    className="w-full bg-[#EFF6FF] border border-[#BFDBFE] rounded-xl py-3 pl-10 pr-10 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#93C5FD]"
                     {...formRegister('password')}
                   />
                   <button
@@ -194,7 +194,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#E36A6A] text-white font-bold py-3.5 px-4 rounded-xl hover:bg-opacity-95 transition-all duration-200 shadow-lg shadow-[#E36A6A]/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#1D4ED8] text-white font-bold py-3.5 px-4 rounded-xl hover:bg-[#1E40AF] transition-all duration-200 shadow-lg shadow-[#1D4ED8]/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Authenticating...' : isLogin ? 'Sign In' : 'Sign Up'}
               </button>
@@ -237,7 +237,7 @@ const Login = () => {
             <div className="text-center">
               <button
                 onClick={toggleMode}
-                className="text-[#E36A6A] hover:underline text-sm font-medium"
+                className="text-[#1D4ED8] hover:underline text-sm font-medium"
               >
                 {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
               </button>

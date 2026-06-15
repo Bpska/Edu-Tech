@@ -115,28 +115,34 @@ const ActiveExam = () => {
     startExamData();
   }, [testId]);
 
-  // 2. Countdown Timer Loop
+  // 2. Countdown Timer Loop — uses a ref to avoid stale-closure / dep-array re-mount bug
+  const timeLeftRef = useRef(timeLeft);
+  useEffect(() => {
+    timeLeftRef.current = timeLeft;
+  }, [timeLeft]);
+
   useEffect(() => {
     if (loading || timeLeft <= 0) return;
 
     timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        const nextTime = prev - 1;
-        if (nextTime <= 0) {
-          clearInterval(timerRef.current);
-          handleAutoSubmit();
-          return 0;
-        }
-        // Sync to localStorage every 5s
-        if (nextTime % 5 === 0) {
-          localStorage.setItem(`exam_timer_${testId}`, nextTime.toString());
-        }
-        return nextTime;
-      });
+      const nextTime = timeLeftRef.current - 1;
+      if (nextTime <= 0) {
+        clearInterval(timerRef.current);
+        setTimeLeft(0);
+        handleAutoSubmit();
+        return;
+      }
+      setTimeLeft(nextTime);
+      timeLeftRef.current = nextTime;
+      // Sync to localStorage every 5s
+      if (nextTime % 5 === 0) {
+        localStorage.setItem(`exam_timer_${testId}`, nextTime.toString());
+      }
     }, 1000);
 
     return () => clearInterval(timerRef.current);
-  }, [loading, timeLeft, testId]);
+  }, [loading, testId]); // FIX: removed timeLeft from deps to stop interval re-creation every tick
+
 
   // 3. Sync Answers and Flagged status to LocalStorage
   const handleSelectOption = (qId, optIdx) => {

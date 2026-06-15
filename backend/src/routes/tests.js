@@ -33,7 +33,10 @@ router.get('/:id/questions', verifyToken, async (req, res) => {
   try {
     const test = await prisma.test.findUnique({
       where: { id: req.params.id },
-      include: { questions: { select: { id: true, text: true, options: true } } } // Exclude correct answer
+      include: {
+        course: { select: { price: true } }, // Include course so we can check price
+        questions: { select: { id: true, text: true, options: true } } // Exclude correct answer
+      }
     });
     if (!test) return res.status(404).json({ error: 'Test not found' });
     
@@ -41,7 +44,8 @@ router.get('/:id/questions', verifyToken, async (req, res) => {
       where: { userId: req.user.userId, courseId: test.courseId, status: 'SUCCESS' }
     });
     
-    if (!purchase && test.price > 0) {
+    // FIX: was test.price (doesn't exist) — must check test.course.price
+    if (!purchase && test.course.price > 0) {
       return res.status(403).json({ error: 'Purchase required' });
     }
     

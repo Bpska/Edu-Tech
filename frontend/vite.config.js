@@ -103,14 +103,14 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 5173,
+    port: 6001,
     strictPort: true,
     hmr: {
       host: 'localhost',
     },
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:6002',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

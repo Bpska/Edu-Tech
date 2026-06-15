@@ -3,16 +3,18 @@ import './admin.css';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Toaster } from 'react-hot-toast';
-import { LayoutDashboard, Users, BookOpen, ClipboardList, CreditCard, History, GraduationCap, LogOut, Menu } from 'lucide-react';
+import { LayoutDashboard, Users, BookOpen, ClipboardList, CreditCard, History, GraduationCap, LogOut, Menu, Bell, MessageSquare } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const navItems = [
-  { path: '/admin',          label: 'Overview',        icon: LayoutDashboard, exact: true },
-  { path: '/admin/users',    label: 'Users',            icon: Users },
-  { path: '/admin/courses',  label: 'Courses',          icon: BookOpen },
-  { path: '/admin/tests',    label: 'Tests & Questions', icon: ClipboardList },
-  { path: '/admin/payments', label: 'Payments',         icon: CreditCard },
-  { path: '/admin/history',  label: 'Exam History',     icon: History },
+  { path: '/admin',                label: 'Overview',        icon: LayoutDashboard, exact: true },
+  { path: '/admin/users',          label: 'Users',            icon: Users },
+  { path: '/admin/courses',        label: 'Courses',          icon: BookOpen },
+  { path: '/admin/tests',          label: 'Tests & Questions', icon: ClipboardList },
+  { path: '/admin/notifications',  label: 'Notifications',    icon: Bell },
+  { path: '/admin/feedback',       label: 'Feedback',         icon: MessageSquare },
+  { path: '/admin/payments',       label: 'Payments',         icon: CreditCard },
+  { path: '/admin/history',        label: 'Exam History',     icon: History },
 ];
 
 const AdminLayout = ({ children, title, subtitle }) => {
@@ -28,8 +30,8 @@ const AdminLayout = ({ children, title, subtitle }) => {
   return (
     <div className="adm-root">
       <Toaster position="top-right" toastOptions={{
-        style: { background: '#0C1829', color: '#333', border: '1px solid rgba(0,0,0,0.1)' },
-        success: { iconTheme: { primary: '#E36A6A', secondary: '#060E1A' } },
+        style: { background: '#FFFFFF', color: '#1E293B', border: '1px solid #E2E8F0' },
+        success: { iconTheme: { primary: '#1D4ED8', secondary: '#EFF6FF' } },
       }} />
 
       {/* ── Sidebar ── */}
@@ -37,11 +39,11 @@ const AdminLayout = ({ children, title, subtitle }) => {
         {/* Logo */}
         <div className="adm-sidebar-logo">
           <div className="adm-sidebar-logo-icon">
-            <GraduationCap style={{ width: 20, height: 20, color: '#E36A6A' }} />
+            <GraduationCap style={{ width: 20, height: 20, color: '#1D4ED8' }} />
           </div>
           <div>
             <p className="adm-sidebar-brand">
-              NEXUS<span style={{ color: '#E36A6A' }}>ADMIN</span>
+              NEXUS<span style={{ color: '#1D4ED8' }}>ADMIN</span>
             </p>
             <p className="adm-sidebar-sub">Control Panel</p>
           </div>
@@ -100,7 +102,7 @@ const AdminLayout = ({ children, title, subtitle }) => {
               onClick={logout}
               style={{
                 background: 'none', border: 'none', cursor: 'pointer',
-                color: '#E36A6A', fontSize: '13px', fontWeight: 600,
+                color: '#1D4ED8', fontSize: '13px', fontWeight: 600,
                 textDecoration: 'underline'
               }}
             >

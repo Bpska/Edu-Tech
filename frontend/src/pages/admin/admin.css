@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   NEXUS ADMIN PANEL — GLOBAL CSS
+   NEXUS ADMIN PANEL — PROFESSIONAL WHITE + BLUE
    All admin components use these classes
 ═══════════════════════════════════════════ */
 
@@ -7,8 +7,8 @@
 .adm-root {
   display: flex;
   min-height: 100vh;
-  background: #FFFBF1;
-  color: #555555;
+  background: #F8FAFF;
+  color: #1E293B;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -16,8 +16,8 @@
 .adm-sidebar {
   width: 256px;
   flex-shrink: 0;
-  background: #FFF2D0;
-  border-right: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border-right: 1px solid #E2E8F0;
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -42,14 +42,14 @@
   align-items: center;
   gap: 12px;
   padding: 20px 20px 16px;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .adm-sidebar-logo-icon {
   width: 38px;
   height: 38px;
-  background: rgba(227,106,106,0.1);
-  border: 1px solid rgba(227,106,106,0.2);
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -61,14 +61,14 @@
   font-family: 'Outfit', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
-  color: #333333;
+  color: #0F172A;
   margin: 0;
   line-height: 1.2;
 }
 
 .adm-sidebar-sub {
   font-size: 10px;
-  color: #555555;
+  color: #64748B;
   margin: 2px 0 0;
 }
 
@@ -83,7 +83,7 @@
 .adm-nav-label {
   font-size: 10px;
   font-weight: 700;
-  color: #666666;
+  color: #94A3B8;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0 10px;
@@ -99,22 +99,22 @@
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #777777;
+  color: #64748B;
   border: 1px solid transparent;
   transition: all 0.15s ease;
   white-space: nowrap;
 }
 
 .adm-nav-link:hover {
-  color: #555555;
-  background: rgba(0,0,0,0.04);
-  border-color: rgba(0,0,0,0.06);
+  color: #1D4ED8;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
 }
 
 .adm-nav-link.active {
-  color: #E36A6A;
-  background: rgba(227,106,106,0.08);
-  border-color: rgba(227,106,106,0.2);
+  color: #1D4ED8;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
   font-weight: 600;
 }
 
@@ -126,7 +126,7 @@
 
 .adm-sidebar-footer {
   padding: 12px;
-  border-top: 1px solid rgba(0,0,0,0.07);
+  border-top: 1px solid #E2E8F0;
 }
 
 .adm-sidebar-footer-btn {
@@ -137,17 +137,18 @@
   border-radius: 10px;
   text-decoration: none;
   font-size: 0.875rem;
-  color: #777777;
-  border: 1px solid rgba(0,0,0,0.07);
-  background: rgba(0,0,0,0.02);
+  color: #64748B;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
   transition: all 0.15s;
   width: 100%;
   box-sizing: border-box;
 }
 
 .adm-sidebar-footer-btn:hover {
-  color: #555555;
-  background: rgba(0,0,0,0.05);
+  color: #1D4ED8;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
 }
 
 /* ── Main area ── */
@@ -163,8 +164,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 28px;
-  background: #FFF2D0;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -175,13 +176,13 @@
   font-family: 'Outfit', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #333333;
+  color: #0F172A;
   margin: 0;
 }
 
 .adm-header-sub {
   font-size: 12px;
-  color: #555555;
+  color: #64748B;
   margin: 2px 0 0;
 }
 
@@ -195,12 +196,12 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(227,106,106,0.1);
-  border: 1px solid rgba(227,106,106,0.25);
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #E36A6A;
+  color: #1D4ED8;
   font-weight: 700;
   font-size: 14px;
   flex-shrink: 0;
@@ -234,14 +235,15 @@
   align-items: center;
   gap: 16px;
   padding: 20px 24px;
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .adm-stat-card:hover {
-  border-color: rgba(0,0,0,0.12);
+  border-color: #BFDBFE;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.08);
 }
 
 .adm-stat-icon {
@@ -259,7 +261,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #777777;
+  color: #64748B;
   margin: 0;
 }
 
@@ -267,15 +269,15 @@
   font-family: 'Outfit', sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  color: #333333;
+  color: #0F172A;
   margin: 4px 0 0;
   line-height: 1;
 }
 
 /* ── Cards (generic) ── */
 .adm-card {
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -285,20 +287,20 @@
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px;
-  border-bottom: 1px solid rgba(0,0,0,0.07);
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .adm-card-title {
   font-family: 'Outfit', sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #333333;
+  color: #0F172A;
   margin: 0;
 }
 
 .adm-card-sub {
   font-size: 12px;
-  color: #555555;
+  color: #64748B;
   margin: 3px 0 0;
 }
 
@@ -319,8 +321,8 @@
 }
 
 .adm-table thead tr {
-  background: rgba(0,0,0,0.02);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background: #F8FAFF;
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .adm-table th {
@@ -328,19 +330,19 @@
   text-align: left;
   font-size: 11px;
   font-weight: 700;
-  color: #555555;
+  color: #64748B;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
 
 .adm-table tbody tr {
-  border-bottom: 1px solid rgba(0,0,0,0.04);
+  border-bottom: 1px solid #F1F5F9;
   transition: background 0.12s;
 }
 
 .adm-table tbody tr:hover {
-  background: rgba(0,0,0,0.025);
+  background: #F8FAFF;
 }
 
 .adm-table tbody tr:last-child {
@@ -350,24 +352,24 @@
 .adm-table td {
   padding: 14px 20px;
   font-size: 0.875rem;
-  color: #666666;
+  color: #475569;
   vertical-align: middle;
 }
 
 .adm-table td.primary {
-  color: #333333;
+  color: #0F172A;
   font-weight: 500;
 }
 
 .adm-td-user .name {
-  color: #333333;
+  color: #0F172A;
   font-weight: 500;
   font-size: 0.875rem;
   margin: 0;
 }
 
 .adm-td-user .email {
-  color: #555555;
+  color: #64748B;
   font-size: 11px;
   margin: 2px 0 0;
 }
@@ -385,39 +387,39 @@
 }
 
 .adm-badge-teal {
-  background: rgba(227,106,106,0.1);
-  color: #E36A6A;
-  border-color: rgba(227,106,106,0.2);
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border-color: #BFDBFE;
 }
 
 .adm-badge-green {
-  background: rgba(52,211,153,0.1);
-  color: #34D399;
-  border-color: rgba(52,211,153,0.2);
+  background: rgba(52, 211, 153, 0.1);
+  color: #059669;
+  border-color: rgba(52, 211, 153, 0.25);
 }
 
 .adm-badge-yellow {
-  background: rgba(245,158,11,0.1);
-  color: #F59E0B;
-  border-color: rgba(245,158,11,0.2);
+  background: rgba(245, 158, 11, 0.1);
+  color: #B45309;
+  border-color: rgba(245, 158, 11, 0.25);
 }
 
 .adm-badge-red {
-  background: rgba(251,113,133,0.1);
-  color: #FB7185;
-  border-color: rgba(251,113,133,0.2);
+  background: rgba(239, 68, 68, 0.08);
+  color: #DC2626;
+  border-color: rgba(239, 68, 68, 0.2);
 }
 
 .adm-badge-purple {
-  background: rgba(129,140,248,0.1);
-  color: #818CF8;
-  border-color: rgba(129,140,248,0.2);
+  background: rgba(139, 92, 246, 0.1);
+  color: #7C3AED;
+  border-color: rgba(139, 92, 246, 0.25);
 }
 
 .adm-badge-gray {
-  background: rgba(100,116,139,0.1);
-  color: #777777;
-  border-color: rgba(100,116,139,0.2);
+  background: #F1F5F9;
+  color: #64748B;
+  border-color: #E2E8F0;
 }
 
 /* ── Buttons ── */
@@ -426,8 +428,8 @@
   align-items: center;
   gap: 7px;
   padding: 9px 20px;
-  background: #E36A6A;
-  color: #FFFBF1;
+  background: #1D4ED8;
+  color: #FFFFFF;
   border: none;
   border-radius: 10px;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -435,11 +437,11 @@
   font-size: 0.875rem;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.15s;
+  transition: background 0.15s;
 }
 
 .adm-btn-primary:hover {
-  opacity: 0.88;
+  background: #1E40AF;
 }
 
 .adm-btn-icon {
@@ -457,27 +459,27 @@
 }
 
 .adm-btn-edit {
-  color: #818CF8;
-  border-color: rgba(129,140,248,0.25);
-  background: rgba(129,140,248,0.08);
+  color: #7C3AED;
+  border-color: rgba(139, 92, 246, 0.25);
+  background: rgba(139, 92, 246, 0.08);
 }
-.adm-btn-edit:hover { background: rgba(129,140,248,0.15); }
+.adm-btn-edit:hover { background: rgba(139, 92, 246, 0.15); }
 
 .adm-btn-delete {
-  color: #FB7185;
-  border-color: rgba(251,113,133,0.25);
-  background: rgba(251,113,133,0.08);
+  color: #DC2626;
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
 }
-.adm-btn-delete:hover { background: rgba(251,113,133,0.15); }
+.adm-btn-delete:hover { background: rgba(239, 68, 68, 0.15); }
 
 .adm-btn-add {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 6px 13px;
-  background: rgba(227,106,106,0.08);
-  color: #E36A6A;
-  border: 1px solid rgba(227,106,106,0.2);
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
@@ -486,7 +488,7 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background 0.15s;
 }
-.adm-btn-add:hover { background: rgba(227,106,106,0.14); }
+.adm-btn-add:hover { background: #DBEAFE; }
 
 .adm-btn-expand {
   display: inline-flex;
@@ -494,14 +496,14 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.1);
+  background: #F8FAFF;
+  border: 1px solid #E2E8F0;
   border-radius: 8px;
-  color: #777777;
+  color: #64748B;
   cursor: pointer;
   transition: all 0.15s;
 }
-.adm-btn-expand:hover { background: rgba(0,0,0,0.08); color: #333333; }
+.adm-btn-expand:hover { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
 
 /* ── Toolbar ── */
 .adm-toolbar {
@@ -523,17 +525,17 @@
   left: 13px;
   top: 50%;
   transform: translateY(-50%);
-  color: #555555;
+  color: #94A3B8;
   pointer-events: none;
 }
 
 .adm-search-input {
   width: 100%;
   padding: 9px 14px 9px 38px;
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.1);
+  background: #F8FAFF;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
-  color: #555555;
+  color: #1E293B;
   font-size: 0.875rem;
   outline: none;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -542,11 +544,11 @@
 }
 
 .adm-search-input:focus {
-  border-color: rgba(227,106,106,0.35);
+  border-color: #93C5FD;
 }
 
 .adm-search-input::placeholder {
-  color: #666666;
+  color: #94A3B8;
 }
 
 /* ── Summary Row (Payments / History) ── */
@@ -561,15 +563,15 @@
 
 .adm-summary-card {
   padding: 18px 20px;
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
 }
 
 .adm-summary-label {
   font-size: 11px;
   font-weight: 700;
-  color: #555555;
+  color: #64748B;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0;
@@ -594,7 +596,7 @@
   flex: 1;
   max-width: 90px;
   height: 6px;
-  background: rgba(0,0,0,0.07);
+  background: #E2E8F0;
   border-radius: 99px;
   overflow: hidden;
 }
@@ -620,18 +622,19 @@
 }
 
 .adm-course-card {
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .adm-course-card:hover {
-  border-color: rgba(0,0,0,0.12);
+  border-color: #BFDBFE;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.07);
 }
 
 .adm-course-card-top {
@@ -653,8 +656,8 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(227,106,106,0.08);
-  border: 1px solid rgba(227,106,106,0.15);
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -663,14 +666,14 @@
 
 .adm-course-name {
   font-weight: 600;
-  color: #333333;
+  color: #0F172A;
   font-size: 0.9rem;
   margin: 0;
   line-height: 1.4;
 }
 
 .adm-course-desc {
-  color: #555555;
+  color: #64748B;
   font-size: 12px;
   margin: 3px 0 0;
   overflow: hidden;
@@ -693,8 +696,8 @@
 
 /* ── Test accordion row ── */
 .adm-test-row {
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   overflow: hidden;
 }
@@ -714,13 +717,13 @@
 
 .adm-test-row-title {
   font-weight: 600;
-  color: #333333;
+  color: #0F172A;
   font-size: 0.9rem;
   margin: 0;
 }
 
 .adm-test-row-meta {
-  color: #555555;
+  color: #64748B;
   font-size: 12px;
   margin: 4px 0 0;
   display: flex;
@@ -737,17 +740,17 @@
 }
 
 .adm-questions-panel {
-  border-top: 1px solid rgba(0,0,0,0.06);
+  border-top: 1px solid #E2E8F0;
   padding: 16px 20px;
-  background: rgba(255,242,208,0.5);
+  background: #F8FAFF;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .adm-question-item {
-  background: rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.06);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
   padding: 14px 16px;
   display: flex;
@@ -757,7 +760,7 @@
 }
 
 .adm-question-text {
-  color: #555555;
+  color: #334155;
   font-size: 0.875rem;
   font-weight: 500;
   margin: 0;
@@ -775,15 +778,15 @@
   padding: 2px 10px;
   border-radius: 20px;
   font-size: 11px;
-  border: 1px solid rgba(0,0,0,0.07);
-  background: rgba(0,0,0,0.03);
-  color: #777777;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+  color: #64748B;
 }
 
 .adm-q-option.correct {
-  background: rgba(227,106,106,0.1);
-  color: #E36A6A;
-  border-color: rgba(227,106,106,0.25);
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border-color: #BFDBFE;
   font-weight: 700;
 }
 
@@ -797,7 +800,7 @@
 .adm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(15, 23, 42, 0.5);
   backdrop-filter: blur(4px);
   z-index: 50;
   display: flex;
@@ -807,8 +810,8 @@
 }
 
 .adm-modal {
-  background: #FFFBF1;
-  border: 1px solid rgba(0,0,0,0.1);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 18px;
   padding: 28px;
   width: 100%;
@@ -818,10 +821,11 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
 .adm-modal-wide {
-  max-width: 580px;
+  max-width: 640px;
 }
 
 .adm-modal-header {
@@ -834,7 +838,7 @@
   font-family: 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #333333;
+  color: #0F172A;
   margin: 0;
 }
 
@@ -842,9 +846,9 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.1);
-  color: #777777;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -853,8 +857,8 @@
   transition: all 0.15s;
 }
 .adm-modal-close:hover {
-  background: rgba(0,0,0,0.1);
-  color: #333333;
+  background: #E2E8F0;
+  color: #0F172A;
 }
 
 .adm-form {
@@ -878,17 +882,17 @@
 .adm-label {
   font-size: 12px;
   font-weight: 600;
-  color: #777777;
+  color: #64748B;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 
 .adm-input {
   padding: 10px 14px;
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.1);
+  background: #F8FAFF;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
-  color: #333333;
+  color: #0F172A;
   font-size: 0.875rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   outline: none;
@@ -898,11 +902,12 @@
 }
 
 .adm-input:focus {
-  border-color: rgba(227,106,106,0.4);
+  border-color: #93C5FD;
+  background: #FFFFFF;
 }
 
 .adm-input::placeholder {
-  color: #666666;
+  color: #94A3B8;
 }
 
 .adm-textarea {
@@ -935,20 +940,20 @@
 }
 
 .adm-toggle-btn.on {
-  background: rgba(227,106,106,0.08);
-  border-color: rgba(227,106,106,0.3);
-  color: #E36A6A;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1D4ED8;
 }
 
 .adm-toggle-btn.off {
-  background: rgba(0,0,0,0.03);
-  border-color: rgba(0,0,0,0.1);
-  color: #777777;
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #64748B;
 }
 
 .adm-submit-btn {
   padding: 12px;
-  background: #E36A6A;
+  background: #1D4ED8;
   color: #FFFFFF;
   border: none;
   border-radius: 12px;
@@ -957,10 +962,10 @@
   font-size: 0.95rem;
   cursor: pointer;
   width: 100%;
-  transition: opacity 0.15s;
+  transition: background 0.15s;
 }
 
-.adm-submit-btn:hover { opacity: 0.88; }
+.adm-submit-btn:hover { background: #1E40AF; }
 .adm-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* ── Option selector (question builder) ── */
@@ -988,20 +993,20 @@
 }
 
 .adm-option-letter.correct {
-  background: rgba(227,106,106,0.15);
-  border-color: rgba(227,106,106,0.4);
-  color: #E36A6A;
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+  color: #1D4ED8;
 }
 
 .adm-option-letter.incorrect {
-  background: rgba(0,0,0,0.03);
-  border-color: rgba(0,0,0,0.1);
-  color: #555555;
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #64748B;
 }
 
 .adm-option-hint {
   font-size: 11px;
-  color: #555555;
+  color: #94A3B8;
   margin: 0;
 }
 
@@ -1016,12 +1021,12 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: rgba(227,106,106,0.08);
-  border: 1px solid rgba(227,106,106,0.18);
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #E36A6A;
+  color: #1D4ED8;
   font-weight: 700;
   font-size: 13px;
   flex-shrink: 0;
@@ -1031,7 +1036,7 @@
 .adm-empty {
   text-align: center;
   padding: 48px 20px;
-  color: #666666;
+  color: #94A3B8;
   font-size: 0.875rem;
 }
 
@@ -1043,8 +1048,8 @@
   padding: 3px 10px;
   border-radius: 20px;
   font-size: 11px;
-  background: rgba(0,0,0,0.04);
-  border: 1px solid rgba(0,0,0,0.08);
-  color: #777777;
+  background: #F8FAFF;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
   white-space: nowrap;
 }

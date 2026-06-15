@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, RotateCcw, BookOpen, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, RotateCcw, BookOpen, CheckCircle, XCircle, MinusCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import api from '../utils/api';
 
 const ScoreCard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   
-  const scoreDetails = location.state?.scoreDetails || { score: 4, total: 5, responses: {} };
+  const scoreDetails = location.state?.scoreDetails || { score: 0, total: 0, responses: {} };
   const { score = 0, total = 0, responses = {} } = scoreDetails;
   
   const [animatedScore, setAnimatedScore] = useState(0);
+  const [questions, setQuestions] = useState([]);
+  const [loadingQs, setLoadingQs] = useState(false);
 
   // Count up animation
   useEffect(() => {
     let start = 0;
     const end = score;
     if (end === 0) return;
-    const duration = 1000; // 1s
-    const increment = end / (duration / 16); // 60fps
-    
+    const duration = 1000;
+    const increment = end / (duration / 16);
     const timer = setInterval(() => {
       start += increment;
       if (start >= end) {
@@ -30,13 +32,48 @@ const ScoreCard = () => {
         setAnimatedScore(Math.floor(start));
       }
     }, 16);
-
     return () => clearInterval(timer);
   }, [score]);
 
+  // Fetch the full test questions (with correct answers) via exam history
+  // The historyId (id param) gives us the testId to look up
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      if (!id || id === 'mock-history') return;
+      setLoadingQs(true);
+      try {
+        // Fetch exam history record to get the testId
+        const historyRes = await api.get('/user/exam-history');
+        const record = historyRes.data.find(h => h.id === id);
+        if (!record) return;
+        
+        // Now fetch full test (admin endpoint includes correct answers)
+        // Use the user-facing test details and parse questions from record.responses
+        const testRes = await api.get(`/tests/${record.testId}`);
+        const testQuestionsRes = await api.get(`/admin/tests/${record.testId}/questions`);
+        
+        const parsedQs = testQuestionsRes.data.map(q => {
+          let opts = [];
+          try {
+            const parsed = typeof q.options === 'string' ? JSON.parse(q.options) : q.options;
+            opts = typeof parsed === 'string' ? JSON.parse(parsed) : parsed;
+            if (!Array.isArray(opts)) opts = [];
+          } catch { opts = []; }
+          return { ...q, options: opts };
+        });
+        setQuestions(parsedQs);
+      } catch (err) {
+        // Questions can't be loaded — show partial review
+        setQuestions([]);
+      } finally {
+        setLoadingQs(false);
+      }
+    };
+    fetchQuestions();
+  }, [id]);
+
   // Donut Chart calculations
   const correctCount = score;
-  // Mocking incorrect vs skipped count for demonstration
   const skippedCount = total - Object.keys(responses || {}).length;
   const wrongCount = Math.max(0, total - correctCount - skippedCount);
 
@@ -49,7 +86,6 @@ const ScoreCard = () => {
   const strokeWidth = 14;
   const r = (size - strokeWidth) / 2;
   const circ = 2 * Math.PI * r;
-
   const getStrokeOffset = (pct) => circ - (pct / 100) * circ;
 
   return (
@@ -83,7 +119,7 @@ const ScoreCard = () => {
               </motion.span>
               <span className="text-gray-500 font-medium text-lg"> / {total}</span>
               <p className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider mt-1">
-                {Math.round((score / total) * 100)}% Accuracy
+                {total > 0 ? Math.round((score / total) * 100) : 0}% Accuracy
               </p>
             </div>
           </div>
@@ -162,44 +198,78 @@ const ScoreCard = () => {
         </div>
       </div>
 
-      {/* Question Review Table */}
+      {/* Question Review Table — uses real questions + responses when available */}
       <div className="glass-card p-6">
         <h3 className="font-display font-semibold text-lg text-gray-900 mb-6">Question Review</h3>
         
-        <div className="space-y-4">
-          {[
-            { id: 'q1', text: 'Which hook should be used to store a persistent mutable value?', correct: true, answer: 'useRef' },
-            { id: 'q2', text: 'What is the correct syntax to import the tag "@import" in Tailwind CSS v4?', correct: true, answer: '@import "tailwindcss";' },
-            { id: 'q3', text: 'In Node.js, which built-in module is used to resolve filesystem paths securely?', correct: false, answer: 'path', chosen: 'fs' },
-          ].map((item, idx) => (
-            <div key={item.id} className="p-4 bg-[#FFF2D0] border border-[#E36A6A]/10 rounded-xl flex items-start gap-4 justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500 font-bold">Q{idx + 1}</span>
-                  <p className="text-sm font-semibold text-gray-900">{item.text}</p>
-                </div>
-                <div className="text-xs text-gray-600">
-                  <p>Correct answer: <span className="text-[#E36A6A] font-medium">{item.answer}</span></p>
-                  {!item.correct && (
-                    <p className="mt-0.5">Your answer: <span className="text-red-400 font-medium">{item.chosen}</span></p>
-                  )}
-                </div>
-              </div>
+        {loadingQs ? (
+          <div className="text-center py-8 text-gray-500 text-sm">Loading question details...</div>
+        ) : questions.length > 0 ? (
+          <div className="space-y-4">
+            {questions.map((q, idx) => {
+              const userAnswer = responses[q.id]; // undefined if skipped
+              const isSkipped = userAnswer === undefined;
+              const isCorrect = !isSkipped && userAnswer === q.correctAnswerIndex;
+              const correctOptionText = q.options[q.correctAnswerIndex];
+              const chosenOptionText = !isSkipped ? q.options[userAnswer] : null;
 
-              <div>
-                {item.correct ? (
-                  <span className="flex items-center gap-1 text-[#E36A6A] bg-[#E36A6A]/10 px-2 py-1 rounded text-xs font-bold">
-                    <CheckCircle className="w-3.5 h-3.5" /> Correct
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1 text-red-400 bg-red-400/10 px-2 py-1 rounded text-xs font-bold">
-                    <XCircle className="w-3.5 h-3.5" /> Incorrect
-                  </span>
-                )}
+              return (
+                <div key={q.id} className="p-4 bg-[#FFF2D0] border border-[#E36A6A]/10 rounded-xl flex items-start gap-4 justify-between">
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 font-bold">Q{idx + 1}</span>
+                      <p className="text-sm font-semibold text-gray-900">{q.text}</p>
+                    </div>
+                    <div className="text-xs text-gray-600 space-y-0.5">
+                      <p>Correct answer: <span className="text-[#E36A6A] font-medium">{correctOptionText}</span></p>
+                      {!isCorrect && !isSkipped && (
+                        <p>Your answer: <span className="text-red-400 font-medium">{chosenOptionText}</span></p>
+                      )}
+                      {isSkipped && (
+                        <p className="text-gray-500 italic">Not attempted</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex-shrink-0">
+                    {isSkipped ? (
+                      <span className="flex items-center gap-1 text-gray-500 bg-gray-500/10 px-2 py-1 rounded text-xs font-bold">
+                        <MinusCircle className="w-3.5 h-3.5" /> Skipped
+                      </span>
+                    ) : isCorrect ? (
+                      <span className="flex items-center gap-1 text-[#E36A6A] bg-[#E36A6A]/10 px-2 py-1 rounded text-xs font-bold">
+                        <CheckCircle className="w-3.5 h-3.5" /> Correct
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-red-400 bg-red-400/10 px-2 py-1 rounded text-xs font-bold">
+                        <XCircle className="w-3.5 h-3.5" /> Incorrect
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          // Fallback: summary only (when questions can't be fetched — e.g. mock exam)
+          <div className="text-center py-8 space-y-3">
+            <p className="text-gray-500 text-sm">Detailed question review is available for registered tests.</p>
+            <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto">
+              <div className="p-3 bg-[#E36A6A]/10 border border-[#E36A6A]/20 rounded-xl text-center">
+                <p className="text-xl font-bold text-[#E36A6A]">{correctCount}</p>
+                <p className="text-[10px] text-gray-600 uppercase font-semibold mt-1">Correct</p>
+              </div>
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-center">
+                <p className="text-xl font-bold text-red-400">{wrongCount}</p>
+                <p className="text-[10px] text-gray-600 uppercase font-semibold mt-1">Wrong</p>
+              </div>
+              <div className="p-3 bg-gray-500/10 border border-gray-500/20 rounded-xl text-center">
+                <p className="text-xl font-bold text-gray-500">{skippedCount}</p>
+                <p className="text-[10px] text-gray-600 uppercase font-semibold mt-1">Skipped</p>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* CTA Section */}

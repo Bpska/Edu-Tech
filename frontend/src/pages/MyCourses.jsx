@@ -19,11 +19,31 @@ const MyCourses = () => {
 
   const fetchCoursesAndPurchases = async () => {
     try {
-      const [coursesRes, purchasesRes] = await Promise.all([
+      const [coursesRes, purchasesRes, historyRes] = await Promise.all([
         api.get('/courses'),
-        api.get('/user/courses').catch(() => ({ data: [] }))
+        api.get('/user/courses').catch(() => ({ data: [] })),
+        api.get('/user/exam-history').catch(() => ({ data: [] }))
       ]);
-      setCourses(coursesRes.data);
+      
+      // Build a set of completed test IDs
+      const completedTestIds = new Set(historyRes.data.map(h => h.testId));
+      
+      // Fetch detailed course data to get test lists for progress calculation
+      const coursesWithProgress = await Promise.all(
+        coursesRes.data.map(async (course) => {
+          try {
+            const detailRes = await api.get(`/courses/${course.id}`);
+            const totalTests = detailRes.data.tests?.length || 0;
+            const completedTests = detailRes.data.tests?.filter(t => completedTestIds.has(t.id)).length || 0;
+            const progress = totalTests > 0 ? Math.round((completedTests / totalTests) * 100) : 0;
+            return { ...course, progress, tests: detailRes.data.tests || [] };
+          } catch {
+            return { ...course, progress: 0 };
+          }
+        })
+      );
+      
+      setCourses(coursesWithProgress);
       setPurchasedCourseIds(purchasesRes.data.map(c => c.id));
     } catch (err) {
       // Mock Data if API fails/empty

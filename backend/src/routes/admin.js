@@ -1,7 +1,22 @@
 const express = require('express');
 const prisma = require('../db');
+const { verifyToken } = require('./auth');
 
 const router = express.Router();
+
+// ─── Admin Auth Middleware ────────────────────────────────────────────────────
+// Protects ALL admin routes: must be authenticated AND have ADMIN role
+const requireAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user?.role !== 'ADMIN') {
+      return res.status(403).json({ error: 'Admin access required' });
+    }
+    next();
+  });
+};
+
+// Apply to all routes in this router
+router.use(requireAdmin);
 
 // ─── STATS ────────────────────────────────────────────────────────────────────
 router.get('/stats', async (req, res) => {
@@ -309,4 +324,76 @@ router.get('/exam-history', async (req, res) => {
   }
 });
 
+// ─── NOTIFICATIONS ────────────────────────────────────────────────────────────
+// Send to all users or a single user
+router.post('/notifications', async (req, res) => {
+  try {
+    const { title, message, userId } = req.body;
+    if (!title || !message) return res.status(400).json({ error: 'Title and message are required' });
+
+    if (userId) {
+      // Send to single user
+      await prisma.notification.create({ data: { userId, title, message } });
+      return res.json({ message: 'Notification sent to user' });
+    }
+
+    // Send to ALL users
+    const users = await prisma.user.findMany({ select: { id: true } });
+    await prisma.notification.createMany({
+      data: users.map(u => ({ userId: u.id, title, message }))
+    });
+    res.json({ message: `Notification sent to ${users.length} users` });
+  } catch (e) {
+    console.error('[Notification Error]', e);
+    res.status(500).json({ error: 'Failed to send notification' });
+  }
+});
+
+// List all sent notifications (admin view)
+router.get('/notifications', async (req, res) => {
+  try {
+    const notifications = await prisma.notification.findMany({
+      include: { user: { select: { email: true, name: true } } },
+      orderBy: { createdAt: 'desc' },
+      take: 200
+    });
+    res.json(notifications);
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to load notifications' });
+  }
+});
+
+// Delete a notification
+router.delete('/notifications/:id', async (req, res) => {
+  try {
+    await prisma.notification.delete({ where: { id: req.params.id } });
+    res.json({ message: 'Notification deleted' });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to delete notification' });
+  }
+});
+
+// ─── FEEDBACK ────────────────────────────────────────────────────────────────
+router.get('/feedback', async (req, res) => {
+  try {
+    const feedback = await prisma.feedback.findMany({
+      include: { user: { select: { email: true, name: true } } },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(feedback);
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to load feedback' });
+  }
+});
+
+router.delete('/feedback/:id', async (req, res) => {
+  try {
+    await prisma.feedback.delete({ where: { id: req.params.id } });
+    res.json({ message: 'Feedback deleted' });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to delete feedback' });
+  }
+});
+
 module.exports = router;
+

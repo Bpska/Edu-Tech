@@ -50,6 +50,9 @@ router.post('/login', async (req, res) => {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(400).json({ error: 'Invalid credentials' });
     
+    // Guard: Google OAuth users have no password_hash — don't crash bcrypt.compare
+    if (!user.password_hash) return res.status(400).json({ error: 'Invalid credentials' });
+    
     const valid = await bcrypt.compare(password, user.password_hash);
     if (!valid) return res.status(400).json({ error: 'Invalid credentials' });
 
@@ -58,7 +61,8 @@ router.post('/login', async (req, res) => {
 
     // Assuming we use httpOnly cookie for refresh token as best practice, but for simplicity we return both here.
     // In a real app we'd res.cookie('refresh_token', refreshToken, { httpOnly: true })
-    res.cookie('refresh_token', refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('refresh_token', refreshToken, { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
     res.json({ accessToken, user: { id: user.id, email: user.email, name: user.name, role: user.role, onboardingCompleted: user.onboardingCompleted } });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -99,11 +103,18 @@ router.post('/google', async (req, res) => {
     const accessToken = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '15m' });
     const refreshToken = jwt.sign({ userId: user.id }, process.env.JWT_REFRESH_SECRET || 'refresh_secret', { expiresIn: '7d' });
 
-    res.cookie('refresh_token', refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('refresh_token', refreshToken, { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
     res.json({ accessToken, user: { id: user.id, email: user.email, name: user.name, role: user.role, onboardingCompleted: user.onboardingCompleted } });
   } catch (error) {
-    console.error('Google auth error:', error);
-    res.status(500).json({ error: 'Internal server error during Google authentication' });
+    console.error('Google auth error details:', {
+      message: error.message,
+      code: error.code,
+      status: error.status,
+      GOOGLE_CLIENT_ID_set: !!GOOGLE_CLIENT_ID,
+      GOOGLE_CLIENT_SECRET_set: !!GOOGLE_CLIENT_SECRET,
+    });
+    res.status(500).json({ error: 'Google authentication failed: ' + (error.message || 'unknown error') });
   }
 });
 

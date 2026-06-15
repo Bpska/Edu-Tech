@@ -23,6 +23,8 @@ import AdminCourses from './pages/admin/AdminCourses';
 import AdminTests from './pages/admin/AdminTests';
 import AdminPayments from './pages/admin/AdminPayments';
 import AdminHistory from './pages/admin/AdminHistory';
+import AdminNotifications from './pages/admin/AdminNotifications';
+import AdminFeedback from './pages/admin/AdminFeedback';
 
 function App() {
   return (
@@ -92,6 +94,8 @@ function App() {
             <Route path="/admin/users" element={<AdminUsers />} />
             <Route path="/admin/courses" element={<AdminCourses />} />
             <Route path="/admin/tests" element={<AdminTests />} />
+            <Route path="/admin/notifications" element={<AdminNotifications />} />
+            <Route path="/admin/feedback" element={<AdminFeedback />} />
             <Route path="/admin/payments" element={<AdminPayments />} />
             <Route path="/admin/history" element={<AdminHistory />} />
           </Route>

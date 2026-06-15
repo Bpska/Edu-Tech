@@ -7,11 +7,11 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
 const steps = [
-  { id: 'exam', title: 'Target Exam', type: 'select', options: ['JEE', 'NEET', 'UPSC', 'GATE', 'CAT', 'Other'] },
+  { id: 'targetExam', title: 'Target Exam', type: 'select', options: ['JEE', 'NEET', 'UPSC', 'GATE', 'CAT', 'Other'] },
   { id: 'classYear', title: 'Class / Year', type: 'select', options: ['Class 11', 'Class 12', 'Dropper', 'Undergrad', 'Graduate'] },
-  { id: 'attemptYear', title: 'Exam Attempt Year', type: 'select', options: ['2024', '2025', '2026', '2027', 'Later'] },
-  { id: 'skillLevel', title: 'Current Prep Level', type: 'select', options: ['Beginner', 'Intermediate', 'Advanced'] },
-  { id: 'dailyHours', title: 'Daily Study Hours', type: 'select', options: ['< 2 Hours', '2 - 4 Hours', '4 - 6 Hours', '6+ Hours'] },
+  { id: 'examAttemptYear', title: 'Exam Attempt Year', type: 'select', options: ['2024', '2025', '2026', '2027', 'Later'] },
+  { id: 'currentSkillLevel', title: 'Current Prep Level', type: 'select', options: ['Beginner', 'Intermediate', 'Advanced'] },
+  { id: 'dailyStudyHours', title: 'Daily Study Hours', type: 'select', options: ['< 2 Hours', '2 - 4 Hours', '4 - 6 Hours', '6+ Hours'] },
   { id: 'details', title: 'More Details', type: 'multi' }
 ];
 
@@ -48,13 +48,8 @@ const Onboarding = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await api.post('/profile/onboarding', {
-        ...formData,
-        targetExam: formData.targetExam || formData.exam, // Handle 'exam' id vs 'targetExam' field
-        examAttemptYear: formData.examAttemptYear || formData.attemptYear,
-        currentSkillLevel: formData.currentSkillLevel || formData.skillLevel,
-        dailyStudyHours: formData.dailyStudyHours || formData.dailyHours,
-      });
+      // All keys now directly match the API field names — no mapping needed
+      await api.post('/profile/onboarding', formData);
       toast.success('Profile setup complete!');
       // Reload page to re-fetch AuthContext and trigger ProtectedRoute to let them in
       window.location.href = '/'; 

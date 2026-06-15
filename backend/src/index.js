@@ -16,12 +16,21 @@ const adminRoutes = require('./routes/admin');
 const profileRoutes = require('./routes/profile');
 
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL || 'http://localhost:5173',
-    'http://localhost:5174'
-  ],
+  origin: (origin, callback) => {
+    const allowed = [
+      process.env.CLIENT_URL || 'http://localhost:5173',
+      'http://localhost:5173',
+      'http://localhost:5174',
+      'http://localhost:6001',
+      `http://${process.env.VPS_IP || '72.61.169.195'}:6001`,
+    ].filter(Boolean);
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin || allowed.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(cookieParser());

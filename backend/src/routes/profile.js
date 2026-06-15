@@ -18,6 +18,24 @@ const onboardingSchema = z.object({
   targetScoreRank: z.string().optional()
 });
 
+router.get('/', verifyToken, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: {
+        id: true, email: true, name: true, role: true,
+        onboardingCompleted: true, createdAt: true,
+        profile: true
+      }
+    });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    console.error('Profile fetch error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.post('/onboarding', verifyToken, async (req, res) => {
   try {
     const data = onboardingSchema.parse(req.body);
