@@ -37,6 +37,7 @@ router.post('/register', async (req, res) => {
     });
     res.json({ message: 'Registration successful', userId: user.id });
   } catch (error) {
+    console.error('Registration error details:', error);
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.errors });
     }
@@ -65,6 +66,7 @@ router.post('/login', async (req, res) => {
     res.cookie('refresh_token', refreshToken, { httpOnly: true, secure: isProduction, sameSite: isProduction ? 'none' : 'lax' });
     res.json({ accessToken, user: { id: user.id, email: user.email, name: user.name, role: user.role, onboardingCompleted: user.onboardingCompleted } });
   } catch (error) {
+    console.error('Login error details:', error);
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: error.errors });
     }
@@ -156,6 +158,7 @@ router.get('/me', verifyToken, async (req, res) => {
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.json({ id: user.id, email: user.email, name: user.name, role: user.role, onboardingCompleted: user.onboardingCompleted });
   } catch (error) {
+    console.error('/me fetch error details:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
