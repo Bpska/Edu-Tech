@@ -17,15 +17,24 @@ const profileRoutes = require('./routes/profile');
 
 app.use(cors({
   origin: (origin, callback) => {
+    const clientUrl = (process.env.CLIENT_URL || '').replace(/\/$/, '');
     const allowed = [
-      process.env.CLIENT_URL || 'http://localhost:5173',
+      clientUrl,
       'http://localhost:5173',
       'http://localhost:5174',
       'http://localhost:6001',
       `http://${process.env.VPS_IP || '72.61.169.195'}:6001`,
+      'http://logisaar.cloud',
+      'https://logisaar.cloud',
+      'http://www.logisaar.cloud',
+      'https://www.logisaar.cloud',
     ].filter(Boolean);
-    // Allow requests with no origin (mobile apps, curl, Postman)
-    if (!origin || allowed.includes(origin)) return callback(null, true);
+    
+    if (!origin || allowed.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    console.error('CORS rejected origin:', origin);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true
