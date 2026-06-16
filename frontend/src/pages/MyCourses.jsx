@@ -3,8 +3,10 @@ import api from '../utils/api';
 import { BookOpen, Lock, Unlock, PlayCircle, CheckCircle, RefreshCw, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 const MyCourses = () => {
+  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [purchasedCourseIds, setPurchasedCourseIds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +63,16 @@ const MyCourses = () => {
 
   useEffect(() => {
     fetchCoursesAndPurchases();
+
+    // Dynamically load Razorpay SDK
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
   const handleUnlockClick = (course) => {
@@ -81,7 +93,7 @@ const MyCourses = () => {
     }
   };
 
-  const handleCheckoutMock = async () => {
+  const handleCheckout = async () => {
     if (!selectedCourse) return;
     setCheckoutStep('processing');
     
@@ -90,28 +102,51 @@ const MyCourses = () => {
       const orderRes = await api.post('/payment/create-order', { courseId: selectedCourse.id });
       const orderData = orderRes.data;
 
-      // Simulate network delay for mock gateway response
-      setTimeout(async () => {
-        try {
-          // 2. Trigger mock webhook confirmation to backend
-          await api.post('/payment/webhook', {
-            razorpay_order_id: orderData.id,
-            razorpay_payment_id: 'pay_mock_' + Math.random().toString(36).substr(2, 9),
-            razorpay_signature: 'sig_mock_verified'
-          });
-          
-          setCheckoutStep('success');
-          toast.success('Payment completed successfully!');
-          
-          // 3. Reload course list to confirm access
-          await fetchCoursesAndPurchases();
-        } catch (webhookErr) {
-          setCheckoutStep('failed');
-          toast.error('Webhook execution failed.');
+      // 2. Configure Razorpay checkout options
+      const options = {
+        key: orderData.key,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Nexus Academy',
+        description: `Unlock ${selectedCourse.title}`,
+        order_id: orderData.id,
+        handler: async function (response) {
+          try {
+            setCheckoutStep('processing');
+            // Call backend signature verification
+            await api.post('/payment/verify', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            });
+            
+            setCheckoutStep('success');
+            toast.success('Payment completed successfully!');
+            await fetchCoursesAndPurchases();
+          } catch (verifyErr) {
+            setCheckoutStep('failed');
+            toast.error(verifyErr.response?.data?.error || 'Payment verification failed.');
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+        },
+        theme: {
+          color: '#E36A6A',
+        },
+        modal: {
+          ondismiss: function () {
+            setCheckoutStep('summary');
+          }
         }
-      }, 2000);
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (orderErr) {
-      toast.error('Failed to initialize Razorpay checkout order.');
+      console.error('Checkout initialization error:', orderErr);
+      toast.error(orderErr.response?.data?.error || 'Failed to initialize Razorpay checkout order.');
       setCheckoutStep('summary');
     }
   };
@@ -239,10 +274,10 @@ const MyCourses = () => {
                   </div>
 
                   <button
-                    onClick={handleCheckoutMock}
+                    onClick={handleCheckout}
                     className="w-full py-4 bg-[#E36A6A] text-white font-bold rounded-xl hover:bg-opacity-95 transition-all text-base shadow-lg shadow-[#E36A6A]/20 flex items-center justify-center gap-2"
                   >
-                    Proceed with Razorpay Mock
+                    Pay with Razorpay
                   </button>
                 </div>
               )}

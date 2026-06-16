@@ -4,9 +4,11 @@ import { MessageSquare, X, Star, Send } from 'lucide-react';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { useLocation } from 'react-router-dom';
 
 const FeedbackButton = () => {
   const { user } = useAuth();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
@@ -15,6 +17,7 @@ const FeedbackButton = () => {
   const [sent, setSent] = useState(false);
 
   if (!user) return null;
+  if (location.pathname !== '/profile') return null;
 
   const handleSubmit = async () => {
     if (!message.trim()) return toast.error('Please write a message');
